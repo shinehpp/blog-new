@@ -37,3 +37,4 @@
 .clear {
     clear: both;
 }
+.clear_1:after{clear:both;}

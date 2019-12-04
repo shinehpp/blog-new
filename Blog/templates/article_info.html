@@ -6,7 +6,8 @@
         {{ info.content|safe }}
     </div>
 
-    <div id="div_digg" >
+    <div class="clear_1">
+        <div id="div_digg">
         <div class="diggit count">
             <span class="diggnum" id="digg_count">{{ info.up_count }}</span>
         </div>
@@ -15,6 +16,33 @@
         </div>
         <div class="clear"></div>
         <div class="diggword" id="digg_tips" style="color: red;"></div>
+    </div>
+    </div>
+    <div class="clear"></div>
+
+    <div>
+        <div>评论列表</div>
+        <div class="panel panel-default">
+            <ul class="list-group">
+                <li class="list-group-item">Cras justo odio</li>
+                <li class="list-group-item">Dapibus ac facilisis in</li>
+                <li class="list-group-item">Morbi leo risus</li>
+                <li class="list-group-item">Porta ac consectetur ac</li>
+                <li class="list-group-item">Vestibulum at eros</li>
+            </ul>
+        </div>
+        <div>发表评论</div>
+        <div>
+            <label for="name">昵称</label>
+            <input type="text" disabled="disabled" id="name" value="{{ username }}">
+        </div>
+        <div>
+            <p>评论内容</p>
+            <textarea name="" id="" cols="60" rows="20"></textarea>
+            <div>
+                <button type="button" class="btn btn-default">提交评论</button>
+            </div>
+        </div>
     </div>
     <script>
         $(".count").click(function () {
@@ -29,14 +57,14 @@
                     "article_id": "{{ info.pk }}"
                 },
                 success: function (data) {
-                    if(data.state){
+                    if (data.state) {
                         var val = parseInt($obj.text());
                         $obj.text(val + 1);
-                    }else {
+                    } else {
                         $("#digg_tips").html(data.msg);
-                        setTimeout(function(){
+                        setTimeout(function () {
                             $(".diggword").html("")
-                        },1000)
+                        }, 1000)
                     }
                 }
             })
