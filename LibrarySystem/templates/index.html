@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Library</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>
+        a {
+            color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <h1>图书管理系统</h1>
+        <p>
+            <button type="button" class="btn btn-success col-lg-offset-2">
+                <a href="/app01/add/">添加</a>
+            </button>
+        </p>
+        <div class="col-lg-8 col-lg-offset-2">
+                <table class="table table-bordered">
+                    <tr>
+                        <td>编号</td>
+                        <td>书名</td>
+                        <td>出版日期</td>
+                        <td>价格</td>
+                        <td>出版社</td>
+                        <td>作者</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    {% for book in book_list %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ book.title }}</td>
+                            <td>{{ book.pub_date|date:'Y-m-d' }}</td>
+                            <td>{{ book.price }}</td>
+                            <td>{{ book.publish.name }}</td>
+                            <td>
+{#                            book.authors.all取出书籍的所有作者对象#}
+                            {% for author in book.authors.all %}
+{#                                循环的最后一次#}
+                                {% if forloop.last %}
+                                        <span>{{author.name}}</span>
+                                {% else %}
+                                        <span>{{ author.name }}</span>,
+                                {% endif %}
+                            {% endfor %}
+                            </td>
+                            <td>
+                                <button  class="btn btn-info">
+                                    <a href="/app01/update/{{ book.id }}">编辑</a>
+                                </button>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger">
+                                    <a href="/app01/delete/{{ book.id }}">删除</a>
+                                </button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
