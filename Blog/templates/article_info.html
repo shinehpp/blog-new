@@ -38,9 +38,9 @@
         </div>
         <div>
             <p>评论内容</p>
-            <textarea name="" id="" cols="60" rows="20"></textarea>
+            <textarea name="" id="text_a" cols="60" rows="20"></textarea>
             <div>
-                <button type="button" class="btn btn-default">提交评论</button>
+                <button type="button" class="btn btn-default s_comment">提交评论</button>
             </div>
         </div>
     </div>
@@ -66,6 +66,20 @@
                             $(".diggword").html("")
                         }, 1000)
                     }
+                }
+            })
+        });
+        $(".s_comment").click(function () {
+            $.ajax({
+                url:'/comment/',
+                type:'post',
+                data:{
+                    "csrfmiddlewaretoken": $("[name='csrfmiddlewaretoken']").val(),
+                    "article":{{ info }},
+                    "content":$("#text_a").text()
+                },
+                success:function (data) {
+
                 }
             })
         })

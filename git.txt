@@ -1,0 +1,75 @@
+1.git init  # 初始化创建GIT仓库
+2.git status   # 查看当前git状态
+3.git add .  #添加当前目录下所有文件到版本库 
+4.git commit -m '第一次提交' #提交到到版本库，并填写版本说明，以便以后回滚。
+5.执行git commit 命令时，可能会提示进行用户和邮箱的配置，该配置用于记录当前版本由那个用户提交
+	git config --local user.name '武沛齐'
+	git config --local user.email 'you@example.com'
+6.git log 查看提交记录，即：历史版本记录	
+7.git reset --hard '历史版本中commit后面的字符串'  #版本回滚
+8.git reflog   #查看已经被回滚掉的版本
+9.git reset --hard "记录的开头的7位字符串" #切换到已被回滚掉的版本
+10.stash相关常用命令：
+	git stash           将当前工作区所有修改过的内容存储到“某个地方”，将工作区还原到当前版本未修改过的状态
+	git stash list      查看“某个地方”存储的所有记录
+	git stash clear     清空“某个地方”
+	git stash pop       将第一个记录从“某个地方”重新拿到工作区（可能有冲突）
+	git stash apply     编号, 将指定编号记录从“某个地方”重新拿到工作区（可能有冲突） 
+	git stash drop      编号，删除指定编号的记录
+11.branch相关常用命令：
+	git branch 分支名称            创建分支
+	git checkout 分支名称          切换分支
+	git branch -m 分支名称         创建并切换到指定分支
+	git branch                     查看所有分支
+	git branch -d 分支名称         删除分支
+	git merge 分支名称             将指定分支合并到当前分支
+
+	# 将数据保存到github
+12.git remote add origin https://github.com/shinehpp/blog.git  # 为地址起一个别名origin
+13.git push origin master              # 将本地master分支内容以及版本信息推送到GitHub
+14.git push origin dev              # 将本地dev分支内容以及版本信息推送到GitHub
+
+# 第一次使用，从github获取最新版本
+15.git clone https://github.com/shinehpp/blog.git    # 将项目从GitHub中获取
+   cd pondo/
+   git Branch                                          # 默认获取到得只有master分支
+   git branch dev origin/dev                           # 创建dev分支且和远程dev分支同步
+   git checkout dev                                    # 切换到dev分支
+   git push origin dev                                 # 提交dev分支内容到远程GitHub托管仓库的dev分支
+
+# 在家里拉取最新版本
+16.git checkout dev                                   # 切换到dev分支
+   git pull origin dev                                # 从远程GitHub仓库获取dev分支最新内容，并合并到本地，【git pull origin 分支】命令等同于【git fetch origin 分支】+ 【git merge origin/分支】
+
+# 第二天在公司
+17. git checkout dev                                   # 切换到dev分支
+    git fetch origin dev                               # 从GitHub仓库获取dev分支最新内容到版本库的分支
+    git merge origin/dev                               # 将版本库的分支内容合并到工作区
+
+18.多人协作时，提交版本
+先 git fetch origin master 然后 git rebase origin/master  再 git push origin master
+
+19.补充：
+    以斜杠“/”开头表示目录；
+
+　　以星号“*”通配多个字符；
+
+　　以问号“?”通配单个字符
+
+　　以方括号“[]”包含单个字符的匹配列表；
+
+　　以叹号“!”表示不忽略(跟踪)匹配到的文件或目录；
+   补充：
+    git tag -a v1.0 -m '版本介绍'        本地创建Tag
+    git show v1.0                       查看
+    git tags -n                         查看本地Tag
+    git tag -l 'v1.4.2.*'               查看本地Tag，模糊匹配
+    git tag -d v1.0                     删除Tag
+    git push origin :refs/tags/v0.2     更新远程tag
+    git checkout v.10                   切换tag
+    git fetch origin tag V1.2
+
+    git push origin  --tags
+    git pull origin  --tags
+    
+    git clone -b v0.1

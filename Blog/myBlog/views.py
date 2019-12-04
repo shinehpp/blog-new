@@ -181,6 +181,7 @@ def home_site(request, username,**kwargs):
 # 文章详情页
 def article_info(request, username, nid):
 	info = Article.objects.filter(nid=nid).first()
+	comment_list = Comment.objects.all()
 	return render(request, 'article_info.html', locals())
 
 
@@ -203,3 +204,9 @@ def digg(request):
 	else:
 		res['msg'] = "您已经踩过！"
 	return JsonResponse(res)
+
+
+# 评论
+def comment_c(request):
+
+	return JsonResponse('ok')
