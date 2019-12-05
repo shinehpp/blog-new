@@ -8,15 +8,15 @@
 
     <div class="clear_1">
         <div id="div_digg">
-        <div class="diggit count">
-            <span class="diggnum" id="digg_count">{{ info.up_count }}</span>
+            <div class="diggit count">
+                <span class="diggnum" id="digg_count" >{{ info.up_count }}</span>
+            </div>
+            <div class="buryit count">
+                <span class="burynum" id="bury_count">{{ info.down_count }}</span>
+            </div>
+            <div class="clear"></div>
+            <div class="diggword" id="digg_tips" style="color: red;"></div>
         </div>
-        <div class="buryit count">
-            <span class="burynum" id="bury_count">{{ info.down_count }}</span>
-        </div>
-        <div class="clear"></div>
-        <div class="diggword" id="digg_tips" style="color: red;"></div>
-    </div>
     </div>
     <div class="clear"></div>
 
@@ -24,11 +24,17 @@
         <div>评论列表</div>
         <div class="panel panel-default">
             <ul class="list-group">
-                <li class="list-group-item">Cras justo odio</li>
-                <li class="list-group-item">Dapibus ac facilisis in</li>
-                <li class="list-group-item">Morbi leo risus</li>
-                <li class="list-group-item">Porta ac consectetur ac</li>
-                <li class="list-group-item">Vestibulum at eros</li>
+                {% for comment in comment_list %}
+                    <li class="list-group-item">
+                        <a href="#" >#{{ forloop.counter }}楼</a>
+                        <span>{{ comment.create_time|date:'Y-m-d H-i' }}</span>
+                        <a href="#">{{ comment.user.username }}</a>
+                        <span class="pull-right">
+                            <a class="btn re_comment" username="{{ comment.user.username }}" comment_pk="{{ comment.pk }}" >回复</a>
+                        </span>
+                        <p>{{ comment.content }}</p>
+                    </li>
+                {% endfor %}
             </ul>
         </div>
         <div>发表评论</div>
@@ -40,7 +46,7 @@
             <p>评论内容</p>
             <textarea name="" id="text_a" cols="60" rows="20"></textarea>
             <div>
-                <button type="button" class="btn btn-default s_comment">提交评论</button>
+                <button type="button" class="btn btn-default" id="s_comment">提交评论</button>
             </div>
         </div>
     </div>
@@ -69,19 +75,44 @@
                 }
             })
         });
-        $(".s_comment").click(function () {
+        $("#s_comment").click(function () {
+            {#console.log($("#text_a").val());#}
             $.ajax({
-                url:'/comment/',
-                type:'post',
-                data:{
+                url: '/comment/',
+                type: 'post',
+                data: {
                     "csrfmiddlewaretoken": $("[name='csrfmiddlewaretoken']").val(),
-                    "article":{{ info }},
-                    "content":$("#text_a").text()
+                    "article":{{ info.pk }},
+                    "content": $("#text_a").val()
                 },
-                success:function (data) {
+                success: function (data) {
+                    var create_time = data.create_time;
+                    var username = data.username;
+                    var content = data.content;
+                    var s = `
+                   <li class="list-group-item">
+                      <div>
+                          <span>${create_time}</span>&nbsp;&nbsp;
+                          <a href=""><span>${username}</span></a>
+                      </div>
+                      <div class="comment_con">
+                          <p>${content}</p>
+                      </div>
+                    </li>`;
 
+                    $("ul.list-group").append(s);
+                    $("#text_a").val('')
                 }
             })
+        });
+        $('.re_comment').click(function () {
+            $text = $("#text_a");
+            $text.focus();
+            let value = "@" + $(this).attr("username") + "\n";
+            console.log(value);
+            $text.val(value);
+            pid = $(this).attr("comment_pk");
+            console.log(pid);
         })
     </script>
 

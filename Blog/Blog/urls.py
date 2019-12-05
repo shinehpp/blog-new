@@ -26,6 +26,7 @@ urlpatterns = [
 	path('login/', views.login),
 	# 点赞
 	path('digg/', views.digg),
+	path('comment/', views.comment_c),
 	path('code_pic/', views.code_pic),
 	# 文章详情页
 	re_path('^(?P<username>\w+)/p/(?P<nid>.*)/$', views.article_info),

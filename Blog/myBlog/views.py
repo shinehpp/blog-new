@@ -181,7 +181,7 @@ def home_site(request, username,**kwargs):
 # 文章详情页
 def article_info(request, username, nid):
 	info = Article.objects.filter(nid=nid).first()
-	comment_list = Comment.objects.all()
+	comment_list = Comment.objects.filter(article=info)
 	return render(request, 'article_info.html', locals())
 
 
@@ -208,5 +208,14 @@ def digg(request):
 
 # 评论
 def comment_c(request):
-
-	return JsonResponse('ok')
+	user = request.user
+	print(request.POST.get('content'))
+	article = Article.objects.get(nid=request.POST.get('article'))
+	content = request.POST.get('content')
+	comment_obj = Comment.objects.create(user=user, article=article, content=content)
+	Article.objects.filter(pk=request.POST.get('article')).update(comment_count=F("comment_count") + 1)
+	res = {}
+	res["create_time"] = comment_obj.create_time.strftime("%Y-%m-%d %X")
+	res["username"] = request.user.username
+	res["content"] = content
+	return JsonResponse(res)

@@ -38,7 +38,7 @@
     });
     $("#submit").click(function () {
         $.ajax({
-            url:'',
+            url:'/login/',
             type:'post',
             csrfmiddlewaretoken:$("[name='csrfmiddlewaretoken']").val(),
             data:{

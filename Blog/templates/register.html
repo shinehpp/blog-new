@@ -38,8 +38,8 @@
 </div>
 <script type="text/javascript">
     $("#upload_file").change(function () {
-        var img_obj = $("#upload_file")[0].files[0];
-        var render = new FileReader();
+        let img_obj = $("#upload_file")[0].files[0];
+        let render = new FileReader();
         render.readAsDataURL(img_obj);
         render.result;
         render.onload=function () {
@@ -47,12 +47,12 @@
         }
     });
     $('#reg').click(function () {
-        var data_list = $("#form").serializeArray();
-        var form_data = new FormData();
+        let data_list = $("#form").serializeArray();
+        let form_data = new FormData();
         $.each(data_list,function(index,data){
             form_data.append(data.name, data.value);
         });
-        var img_obj = $("#upload_file")[0].files[0];
+        let img_obj = $("#upload_file")[0].files[0];
         form_data.append("avatar",img_obj);
         console.log(data_list);
         $.ajax({
