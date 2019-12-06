@@ -19,7 +19,9 @@
         </div>
     </div>
     <div class="clear"></div>
-
+    <div>
+        <div>评论树</div>
+    </div>
     <div>
         <div>评论列表</div>
         <div class="panel panel-default">
@@ -32,6 +34,11 @@
                         <span class="pull-right">
                             <a class="btn re_comment" username="{{ comment.user.username }}" comment_pk="{{ comment.pk }}" >回复</a>
                         </span>
+                        {% if comment.parent_comment %}
+                            <div class="well">
+                                {{ comment.parent_comment.user.username }}:{{ comment.parent_comment.content }}
+                            </div>
+                        {% endif %}
                         <p>{{ comment.content }}</p>
                     </li>
                 {% endfor %}
@@ -51,6 +58,7 @@
         </div>
     </div>
     <script>
+        pid = '';
         $(".count").click(function () {
             var is_up = $(this).hasClass('diggit');
             $obj = $(this).children("span");
@@ -76,14 +84,19 @@
             })
         });
         $("#s_comment").click(function () {
-            {#console.log($("#text_a").val());#}
+            let content = $("#text_a").val();
+            if(pid){
+                let index = content.indexOf('\n');
+                content = content.slice(index+1)
+            }
             $.ajax({
                 url: '/comment/',
                 type: 'post',
                 data: {
                     "csrfmiddlewaretoken": $("[name='csrfmiddlewaretoken']").val(),
                     "article":{{ info.pk }},
-                    "content": $("#text_a").val()
+                    "content": content,
+                    "pid":pid
                 },
                 success: function (data) {
                     var create_time = data.create_time;
@@ -101,7 +114,8 @@
                     </li>`;
 
                     $("ul.list-group").append(s);
-                    $("#text_a").val('')
+                    $("#text_a").val('');
+                    pid = ''
                 }
             })
         });
@@ -113,6 +127,11 @@
             $text.val(value);
             pid = $(this).attr("comment_pk");
             console.log(pid);
+        });
+        $.ajax({
+            url:'',
+            type:'get',
+
         })
     </script>
 

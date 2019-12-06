@@ -212,7 +212,8 @@ def comment_c(request):
 	print(request.POST.get('content'))
 	article = Article.objects.get(nid=request.POST.get('article'))
 	content = request.POST.get('content')
-	comment_obj = Comment.objects.create(user=user, article=article, content=content)
+	pid = request.POST.get('pid')
+	comment_obj = Comment.objects.create(user=user, article=article, content=content, parent_comment_id=pid)
 	Article.objects.filter(pk=request.POST.get('article')).update(comment_count=F("comment_count") + 1)
 	res = {}
 	res["create_time"] = comment_obj.create_time.strftime("%Y-%m-%d %X")
