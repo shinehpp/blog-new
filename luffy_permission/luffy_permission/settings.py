@@ -29,43 +29,44 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'rbac.apps.RbacConfig',
-    'web.apps.WebConfig'
+	'django.contrib.admin',
+	'django.contrib.auth',
+	'django.contrib.contenttypes',
+	'django.contrib.sessions',
+	'django.contrib.messages',
+	'django.contrib.staticfiles',
+	'rbac',
+	'web.apps.WebConfig'
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	'django.middleware.security.SecurityMiddleware',
+	'django.contrib.sessions.middleware.SessionMiddleware',
+	'django.middleware.common.CommonMiddleware',
+	'django.middleware.csrf.CsrfViewMiddleware',
+	'django.contrib.auth.middleware.AuthenticationMiddleware',
+	'django.contrib.messages.middleware.MessageMiddleware',
+	'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	'rbac.rbacmiddlewares.permission_middle.MyPermissionMiddleware',
 ]
 
 ROOT_URLCONF = 'luffy_permission.urls'
 
 TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
+	{
+		'BACKEND': 'django.template.backends.django.DjangoTemplates',
+		'DIRS': [os.path.join(BASE_DIR, 'templates')]
+		,
+		'APP_DIRS': True,
+		'OPTIONS': {
+			'context_processors': [
+				'django.template.context_processors.debug',
+				'django.template.context_processors.request',
+				'django.contrib.auth.context_processors.auth',
+				'django.contrib.messages.context_processors.messages',
+			],
+		},
+	},
 ]
 
 WSGI_APPLICATION = 'luffy_permission.wsgi.application'
@@ -81,33 +82,32 @@ WSGI_APPLICATION = 'luffy_permission.wsgi.application'
 # }
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'crm',
-        'USER': 'root',
-	    'PASSWORD': '123456',
-	    'HOST': '127.0.0.1',
-	    'PORT':3306
+	'default': {
+		'ENGINE': 'django.db.backends.mysql',
+		'NAME': 'crm',
+		'USER': 'root',
+		'PASSWORD': '123',
+		'HOST': '127.0.0.1',
+		'PORT': 3306
 	}
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+	{
+		'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+	},
+	{
+		'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+	},
+	{
+		'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+	},
+	{
+		'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+	},
 ]
 
 # Internationalization
@@ -134,8 +134,8 @@ from django.core.files.uploadhandler import TemporaryFileUploadHandler
 
 # List of upload handler classes to be applied in order.
 FILE_UPLOAD_HANDLERS = [
-    'django.core.files.uploadhandler.MemoryFileUploadHandler',
-    'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+	'django.core.files.uploadhandler.MemoryFileUploadHandler',
+	'django.core.files.uploadhandler.TemporaryFileUploadHandler',
 ]
 
 # Maximum size, in bytes, of a request before it will be streamed to the
@@ -172,3 +172,6 @@ FILE_UPLOAD_PERMISSIONS = None
 # see https://docs.python.org/3/library/os.html#files-and-directories.
 # 文件夹权限
 FILE_UPLOAD_DIRECTORY_PERMISSIONS = None
+
+PERMISSION_M = 'permission_m'
+PERMISSION_C = 'permission_c'
