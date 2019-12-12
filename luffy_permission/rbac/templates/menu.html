@@ -1,7 +1,27 @@
-{% for key,value in m.items %}
-    <a href="{{ value.url }}">
-        <span class="icon-wrap"><i class="fa fa-code-fork"></i></span> {{ value.title }}</a>
+{#{% for key,value in m.items %}#}
+{#    <a>#}
+{#        <span class="icon-wrap"><i class="{{ value.icon }}"></i></span> {{ value.title }}#}
+{#    </a>#}
+{#    {% for v in value.children %}#}
+{#        <a href="{{ v.url }}">#}
+{#         {{ v.title }}#}
+{#        </a>#}
+{#    {% endfor %}#}
+{#{% endfor %}#}
+
+{% for item in m.values %}
+    <div class="item">
+        <div class="title">
+            <a href="#"><span class="icon-wrap"><i class="fa {{ item.icon }}"></i></span>{{ item.title }}</a>
+        </div>
+        <div class="body {{ item.class }}">
+            {% for per in item.children %}
+                <a  href="{{ per.url }}">{{ per.title }}</a>
+            {% endfor %}
+        </div>
+    </div>
 {% endfor %}
+
 
 
 
