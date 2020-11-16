@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link rel="stylesheet" href="/statics/bootstrap-3.3.7-dist/css/bootstrap.css">
+    <script src="/statics/jquery-3.4.1.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <h2>登录页面</h2>
+            <div class="col-lg-6 col-lg-offset-3">
+                <form>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="username" >用户名</label>
+                        <input type="text" id="username" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">密码</label>
+                        <input type="password" id="password" class="form-control">
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-lg-6 form-group">
+                            <label for="valid_code" class="form-group">验证码</label>
+                            <input type="text" id="valid_code" class="form-control">
+                        </div>
+                        <div class="col-lg-6 form-group">
+                            <img src="{% url 'valid_code' %}"  style="padding-top: 30px">
+                        </div>
+                    </div>
+                    <button class="btn-default form-group"  id="login_btn">登录</button><span id="error_text"></span>
+                </form>
+            </div>
+            
+        </div>
+    </div>
+    <script>
+        $('#login_btn').click(function(){
+            $(ajax)({
+                url:'',
+                type:'POST',
+                data:{
+                    username:$('#username').val(),
+                    password:$('#password').val(),
+                    valid_code:$('#valid_code').val(),
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+                },
+                success:function(data){
+                    if(data.user){
+                        location.href('http://www.baidu.com')
+                    }else{
+                        $('#error_text').text(data.msg).css({'color':red,'margin-left':20});
+                        setTimeout(function () {
+                            $('#error_text').text("")
+                        },2000)
+                    }
+                }
+                }
+            )
+        })
+    </script>
+</body>
+</html>
